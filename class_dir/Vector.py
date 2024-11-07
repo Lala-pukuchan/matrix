@@ -17,7 +17,8 @@ class Vector:
         self.elements = [a - b for a, b in zip(self.elements, v.elements)]
 
     def scl(self, scalar):
-        self.elements = [scalar * a for a in self.elements]
+        # Return a new Vector with scaled elements
+        return Vector([scalar * a for a in self.elements])
 
     def __str__(self):
         return str(self.elements)
@@ -35,7 +36,7 @@ class Vector:
 
         # Perform scaling and summing
         for vector, scalar in zip(vectors, scalars):
-            scaled_vector = vector.scale(scalar)
+            scaled_vector = vector.scl(scalar)
             result_elements = [
                 sum(x) for x in zip(result_elements, scaled_vector.elements)
             ]
