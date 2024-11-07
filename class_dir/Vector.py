@@ -42,3 +42,20 @@ class Vector:
             ]
 
         return cls(result_elements)
+
+    @staticmethod
+    def lerp(start, end, t):
+        """
+        Linear interpolation between two vectors or scalars.
+        """
+        if isinstance(start, (int, float)) and isinstance(end, (int, float)):
+            # Scalar case
+            return start + t * (end - start)
+        elif isinstance(start, Vector) and isinstance(end, Vector):
+            # Vector case
+            result_vector = Vector.linear_combination([start, end], [1 - t, t])
+            # Round each element to 1 decimal place
+            result_vector.elements = [round(x, 1) for x in result_vector.elements]
+            return result_vector
+        else:
+            raise ValueError("Start and end must be both scalars or vectors")
