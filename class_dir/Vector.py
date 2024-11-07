@@ -21,3 +21,23 @@ class Vector:
 
     def __str__(self):
         return str(self.elements)
+
+    @classmethod
+    def linear_combination(cls, vectors, scalars):
+        """
+        Compute the linear combination of vectors with given scalars.
+        """
+        if len(vectors) != len(scalars):
+            raise ValueError("Vectors and scalars must have the same length")
+
+        # Start with a zero vector of the same dimension
+        result_elements = [0] * len(vectors[0].elements)
+
+        # Perform scaling and summing
+        for vector, scalar in zip(vectors, scalars):
+            scaled_vector = vector.scale(scalar)
+            result_elements = [
+                sum(x) for x in zip(result_elements, scaled_vector.elements)
+            ]
+
+        return cls(result_elements)

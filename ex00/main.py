@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from class_dir.Vector import Vector
 from class_dir.Matrix import Matrix
 
