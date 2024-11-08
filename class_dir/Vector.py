@@ -59,3 +59,8 @@ class Vector:
             return result_vector
         else:
             raise ValueError("Start and end must be both scalars or vectors")
+
+    def dot(self, other):
+        if len(self.elements) != len(other.elements):
+            raise ValueError("Vectors must be of the same length")
+        return sum(x * y for x, y in zip(self.elements, other.elements))
