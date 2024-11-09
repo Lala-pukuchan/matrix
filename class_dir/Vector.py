@@ -73,3 +73,6 @@ class Vector:
 
     def norm_inf(self):
         return max(abs(x) for x in self.elements)
+
+    def angle_cos(self, other):
+        return round(self.dot(other) / (self.norm() * other.norm()), 9)
