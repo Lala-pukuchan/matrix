@@ -76,3 +76,10 @@ class Vector:
 
     def angle_cos(self, other):
         return round(self.dot(other) / (self.norm() * other.norm()), 9)
+
+    def cross_product(self, other):
+        if len(self.elements) != 3 or len(other.elements) != 3:
+            raise ValueError("Cross product is only defined for 3D vectors")
+        a, b, c = self.elements
+        d, e, f = other.elements
+        return Vector([b * f - c * e, c * d - a * f, a * e - b * d])
