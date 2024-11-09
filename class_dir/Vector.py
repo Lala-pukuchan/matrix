@@ -64,3 +64,12 @@ class Vector:
         if len(self.elements) != len(other.elements):
             raise ValueError("Vectors must be of the same length")
         return sum(x * y for x, y in zip(self.elements, other.elements))
+
+    def norm_1(self):
+        return sum(abs(x) for x in self.elements)
+
+    def norm(self):
+        return sum(x**2 for x in self.elements) ** 0.5
+
+    def norm_inf(self):
+        return max(abs(x) for x in self.elements)
