@@ -104,3 +104,30 @@ class Matrix:
             for row in self.rows
         ]
         return Matrix(result_rows)
+
+    def trace(self):
+        """
+        Calculate the trace of the matrix.
+        Only defined for square matrices.
+        """
+        # Ensure the matrix is square
+        if len(self.rows) != len(self.rows[0]):
+            raise ValueError("Trace is only defined for square matrices.")
+
+        # Sum the diagonal elements
+        return sum(self.rows[i][i] for i in range(len(self.rows)))
+
+    def transpose(self):
+        """
+        Transpose the matrix.
+        converts rows to columns and columns to rows.
+        map function is for-loop equivalent and converts tuple to list.
+        [[1, 2, 3],
+        [4, 5, 6]]
+        to
+        [[1, 4],
+        [2, 5],
+        [3, 6]]
+        """
+        self.rows = list(map(list, zip(*self.rows)))
+        return self
