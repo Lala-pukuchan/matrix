@@ -1,4 +1,5 @@
 from .Vector import Vector
+import numpy as np
 
 
 class Matrix:
@@ -131,3 +132,59 @@ class Matrix:
         """
         self.rows = list(map(list, zip(*self.rows)))
         return self
+
+    def row_echelon(self):
+        """
+        Convert the matrix to row-echelon form.
+        time complexity: O(n^3) 3 nested loops
+        space complexity: O(n^2) create new matrix n rows and n columns
+        """
+        # Copy the matrix to avoid modifying the original
+        matrix = [row[:] for row in self.rows]
+
+        # Initialize pivot position
+        num_rows = len(matrix)
+        num_cols = len(matrix[0])
+        pivot_row = 0
+
+        for pivot_col in range(num_cols):
+            # Find a non-zero pivot and swap rows if needed
+            if matrix[pivot_row][pivot_col] == 0:
+                for j in range(pivot_row + 1, num_rows):
+                    if matrix[j][pivot_col] != 0:
+                        matrix[pivot_row], matrix[j] = matrix[j], matrix[pivot_row]
+                        break
+                else:
+                    continue  # Skip to the next column if no non-zero pivot is found
+
+            # Normalize the pivot row
+            pivot = matrix[pivot_row][pivot_col]
+            matrix[pivot_row] = [x / pivot for x in matrix[pivot_row]]
+
+            # Eliminate entries below the pivot
+            for j in range(pivot_row + 1, num_rows):
+                if matrix[j][pivot_col] != 0:
+                    factor = matrix[j][pivot_col]
+                    matrix[j] = [
+                        a - factor * b for a, b in zip(matrix[j], matrix[pivot_row])
+                    ]
+
+            # Eliminate entries above the pivot (Gauss-Jordan elimination step)
+            for j in range(pivot_row - 1, -1, -1):
+                if matrix[j][pivot_col] != 0:
+                    factor = matrix[j][pivot_col]
+                    matrix[j] = [
+                        a - factor * b for a, b in zip(matrix[j], matrix[pivot_row])
+                    ]
+
+            # Move to the next pivot row
+            pivot_row += 1
+            if pivot_row >= num_rows:
+                break
+
+        # Replace small values with 0.0 to avoid -0.0
+        threshold = 1e-10
+        for i in range(num_rows):
+            matrix[i] = [0.0 if abs(x) < threshold else x for x in matrix[i]]
+
+        return Matrix(matrix)
