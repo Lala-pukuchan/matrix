@@ -133,6 +133,18 @@ class Matrix:
         self.rows = list(map(list, zip(*self.rows)))
         return self
 
+    def trace(self):
+        """
+        Calculate the trace of the matrix.
+        Only defined for square matrices.
+        """
+        # Ensure the matrix is square
+        if len(self.rows) != len(self.rows[0]):
+            raise ValueError("Trace is only defined for square matrices.")
+
+        # Sum the diagonal elements
+        return sum(self.rows[i][i] for i in range(len(self.rows)))
+
     def row_echelon(self):
         """
         Convert the matrix to row-echelon form.
