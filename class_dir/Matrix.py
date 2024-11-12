@@ -231,3 +231,63 @@ class Matrix:
             det += m * Matrix(sub_matrix).determinant()
 
         return det
+
+    def adjugate(self):
+        """
+        Calculate the adjugate of the matrix.
+        Only defined for square matrices.
+        [[3, 5],
+        [-7, 2]]
+        to
+        [[2, -5],
+        [7, 3]]
+        convert 3 to 2
+        and negative -7 to 7, 5 to -5
+        """
+        if not self.is_square():
+            raise ValueError("Adjugate is only defined for square matrices.")
+        # Calculate the matrix of minors
+        minors = [
+            [
+                ((-1) ** (i + j))
+                * Matrix(
+                    [
+                        row[:j] + row[j + 1 :]
+                        for row in self.rows[:i] + self.rows[i + 1 :]
+                    ]
+                ).determinant()
+                for j in range(len(self.rows))
+            ]
+            for i in range(len(self.rows))
+        ]
+
+        # Transpose the matrix of minors to get the cofactor matrix (the adjugate)
+        cofactors = list(map(list, zip(*minors)))
+        return Matrix(cofactors)
+
+    def is_square(self):
+        """
+        Check if the matrix is square.
+        """
+        return len(self.rows) == len(self.rows[0])
+
+    def inverse(self):
+        """
+        Calculate the inverse of the matrix.
+        """
+        if not self.is_square():
+            raise ValueError("Inverse is only defined for square matrices.")
+
+        det = self.determinant()
+        if det == 0:
+            raise ValueError("Matrix is not invertible.")
+
+        # Calculate adjugate and scale by 1/det
+        adjugate = self.adjugate()
+        inverse_matrix = adjugate.scl(1 / det)
+
+        # Clean up small negative zeros
+        inverse_matrix.rows = [
+            [0.0 if abs(x) < 1e-10 else x for x in row] for row in inverse_matrix.rows
+        ]
+        return inverse_matrix
