@@ -200,3 +200,34 @@ class Matrix:
             matrix[i] = [0.0 if abs(x) < threshold else x for x in matrix[i]]
 
         return Matrix(matrix)
+
+    def determinant(self):
+        """
+        Calculate the determinant of the matrix.
+        Only defined for square matrices.
+        Time Complexity: O(n!)
+        - The function uses cofactor expansion to compute the determinant, which has a factorial time complexity.
+        - For each element in the first row, it recursively calculates the determinant of an (n-1) x (n-1) submatrix.
+        - For an n x n matrix, this results in O(n!) complexity because each recursive call spawns further recursive calls for smaller submatrices.
+
+        Space Complexity: O(n^2)
+        - Each recursive call creates a submatrix by removing one row and one column, storing these in memory.
+        - For an n x n matrix, the space required to store these submatrices across all recursive calls is O(n^2).
+        - Additionally, the recursion depth can reach up to n, so the maximum space complexity is bounded by O(n^2) for an n x n matrix.
+        """
+        # Ensure the matrix is square
+        if len(self.rows) != len(self.rows[0]):
+            raise ValueError("Determinant is only defined for square matrices.")
+
+        # Base case for 2x2 matrix
+        if len(self.rows) == 2:
+            return self.rows[0][0] * self.rows[1][1] - self.rows[0][1] * self.rows[1][0]
+
+        # Recursive case for larger matrices
+        det = 0
+        for i in range(len(self.rows)):
+            m = self.rows[0][i] * ((-1) ** i)
+            sub_matrix = [row[:i] + row[i + 1 :] for row in self.rows[1:]]
+            det += m * Matrix(sub_matrix).determinant()
+
+        return det
