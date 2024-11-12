@@ -291,3 +291,50 @@ class Matrix:
             [0.0 if abs(x) < 1e-10 else x for x in row] for row in inverse_matrix.rows
         ]
         return inverse_matrix
+
+    def rank(self):
+        """
+        Calculate the rank of the matrix.
+        provide row echelon form of the matrix
+        sum of non-zero rows
+        """
+        num_rows = len(self.rows)
+        num_cols = len(self.rows[0])
+        rank = 0
+
+        for pivot_col in range(num_cols):
+            # Find a non-zero pivot and swap rows if needed
+            if self.rows[rank][pivot_col] == 0:
+                for j in range(rank + 1, num_rows):
+                    if self.rows[j][pivot_col] != 0:
+                        # Swap rows in place
+                        self.rows[rank], self.rows[j] = self.rows[j], self.rows[rank]
+                        break
+                else:
+                    continue  # No non-zero pivot in this column, move to the next column
+
+            # Normalize the pivot row
+            pivot = self.rows[rank][pivot_col]
+            self.rows[rank] = [x / pivot for x in self.rows[rank]]
+
+            # Eliminate entries below the pivot
+            for j in range(rank + 1, num_rows):
+                factor = self.rows[j][pivot_col]
+                self.rows[j] = [
+                    a - factor * b for a, b in zip(self.rows[j], self.rows[rank])
+                ]
+
+            # Optionally, eliminate entries above the pivot for reduced row echelon form (not required for rank)
+            for j in range(rank - 1, -1, -1):
+                factor = self.rows[j][pivot_col]
+                self.rows[j] = [
+                    a - factor * b for a, b in zip(self.rows[j], self.rows[rank])
+                ]
+
+            # Move to the next row and increment the rank
+            rank += 1
+            if rank >= num_rows:
+                break
+
+        # Count the number of non-zero rows to determine the rank
+        return rank
