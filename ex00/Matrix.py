@@ -21,10 +21,10 @@ class Matrix:
             for i in range(len(self.data))
         ]
 
-    def scl(self, scl):
-        if not isinstance(scl, (int, float)):
+    def scl(self, scalar):
+        if not isinstance(scalar, (int, float)):
             raise ValueError("The scalar must be a number.")
         return [
-            [self.data[i][j] * scl for j in range(len(self.data[0]))]
+            [self.data[i][j] * scalar for j in range(len(self.data[0]))]
             for i in range(len(self.data))
         ]
