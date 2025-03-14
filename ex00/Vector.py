@@ -7,5 +7,15 @@ class Vector:
 
     def add(self, other):
         if len(self.data) != len(other.data):
-            raise ValueError("The matrices must have the same dimensions.")
-        return [self[i] + other[i] for i in range(len(self))]
+            raise ValueError("The vectors must have the same dimensions.")
+        return [self.data[i] + other.data[i] for i in range(len(self.data))]
+
+    def sub(self, other):
+        if len(self.data) != len(other.data):
+            raise ValueError("The vectors must have the same dimensions.")
+        return [self.data[i] - other.data[i] for i in range(len(self.data))]
+
+    def scl(self, scalar):
+        if not isinstance(scalar, (int, float)):
+            raise ValueError("The scalar must be a number.")
+        return [self.data[i] * scalar for i in range(len(self.data))]
