@@ -26,7 +26,6 @@ def test_linear_combination():
 
 
 def test_linear_combination_from_subject():
-    # テスト1
     e1 = Vector([1.0, 0.0, 0.0])
     e2 = Vector([0.0, 1.0, 0.0])
     e3 = Vector([0.0, 0.0, 1.0])
@@ -36,7 +35,6 @@ def test_linear_combination_from_subject():
             f"Subject linear combination test 1 failed: expected [10.0, -2.0, 0.5], got {result}"
         )
 
-    # テスト2
     v1 = Vector([1.0, 2.0, 3.0])
     v2 = Vector([0.0, 10.0, -100.0])
     result = Vector.linear_combination([v1, v2], [10.0, -2.0])
@@ -47,6 +45,13 @@ def test_linear_combination_from_subject():
 
 
 def main():
+    """
+    a1: scalar
+    a2: scalar
+    v1: vector
+    v2: vector
+    Linear combination: a1v1 + a2v2
+    """
     try:
         test_linear_combination()
         test_linear_combination_from_subject()
