@@ -1,26 +1,34 @@
 import sys
-import os
+from Matrix import Matrix
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from class_dir.Matrix import Matrix
+def test():
+    test_cases = [
+        ([[0, 0], [0, 0]], [[0, 0], [0, 0]]),
+        ([[1, 0], [0, 1]], [[1, 0], [0, 1]]),
+        ([[1, 2], [3, 4]], [[1, 3], [2, 4]]),
+        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [[1, 0, 0], [0, 1, 0], [0, 0, 1]]),
+        ([[1, 2], [3, 4], [5, 6]], [[1, 3, 5], [2, 4, 6]]),
+    ]
 
-# Test cases for matrix transpose
-u = Matrix([[1, 2, 3], [4, 5, 6]])
-print(u.transpose())  # Output: [[1, 4], [2, 5], [3, 6]]
+    for input_data, expected in test_cases:
+        m = Matrix(input_data)
+        result = m.transpose()
+        if result.data != expected:
+            raise AssertionError(
+                f"Transpose test failed for {input_data}: expected {expected}, got {result.data}"
+            )
+    print("All transpose tests passed.")
 
-print("-----------------------")
-u = Matrix([[1, 2], [3, 4], [5, 6]])
-print(u.transpose())  # Output: [[1, 3, 5], [2, 4, 6]]
 
-print("-----------------------")
-u = Matrix([[1]])
-print(u.transpose())  # Output: [[1]]
+def main():
+    try:
+        test()
+    except AssertionError as e:
+        print("Test failed:", e)
+        sys.exit(1)
+    print("All tests passed.")
 
-print("-----------------------")
-u = Matrix([[1, 2, 3]])
-print(u.transpose())  # Output: [[1], [2], [3]]
 
-print("-----------------------")
-u = Matrix([[1], [2], [3]])
-print(u.transpose())  # Output: [[1, 2, 3]]
+if __name__ == "__main__":
+    main()
