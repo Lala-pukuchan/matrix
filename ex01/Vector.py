@@ -5,11 +5,6 @@ class Vector:
     def __str__(self):
         return str(self.data)
 
-    def scl(self, scalar):
-        if not isinstance(scalar, (int, float)):
-            raise ValueError("The scalar must be a number.")
-        return [self.data[i] * scalar for i in range(len(self.data))]
-
     @staticmethod
     def linear_combination(vectors, coefs):
         if len(vectors) != len(coefs):
