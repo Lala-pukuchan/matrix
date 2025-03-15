@@ -21,14 +21,36 @@ def test_linear_combination():
         result = Vector.linear_combination(vectors, coefs)
         if result != expected:
             raise AssertionError(
-                f"Linear combination failed:\n  vectors: {[str(v) for v in vectors]}, coefs: {coefs}\n  expected {expected} but got {result.data}"
+                f"Linear combination failed:\n  vectors: {[str(v) for v in vectors]}, coefs: {coefs}\n  expected {expected} but got {result}"
             )
-    print("All linear combination tests passed.")
+
+
+def test_linear_combination_from_subject():
+    # テスト1
+    e1 = Vector([1.0, 0.0, 0.0])
+    e2 = Vector([0.0, 1.0, 0.0])
+    e3 = Vector([0.0, 0.0, 1.0])
+    result = Vector.linear_combination([e1, e2, e3], [10.0, -2.0, 0.5])
+    if result != [10.0, -2.0, 0.5]:
+        raise AssertionError(
+            f"Subject linear combination test 1 failed: expected [10.0, -2.0, 0.5], got {result}"
+        )
+
+    # テスト2
+    v1 = Vector([1.0, 2.0, 3.0])
+    v2 = Vector([0.0, 10.0, -100.0])
+    result = Vector.linear_combination([v1, v2], [10.0, -2.0])
+    if result != [10.0, 0.0, 230.0]:
+        raise AssertionError(
+            f"Subject linear combination test 2 failed: expected [10.0, 0.0, 230.0], got {result}"
+        )
 
 
 def main():
     try:
         test_linear_combination()
+        test_linear_combination_from_subject()
+        print("All linear combination from subject tests passed.")
     except AssertionError as e:
         print("Test failed:", e)
         sys.exit(1)
