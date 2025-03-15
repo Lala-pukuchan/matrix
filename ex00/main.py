@@ -123,12 +123,6 @@ def test_matrix_scaling():
 
 
 def test_vector_from_subject():
-    # テスト1: 加算
-    # let mut u = Vector::from([2., 3.]);
-    # let v = Vector::from([5., 7.]);
-    # u.add(v);
-    # println!("{}", u);
-    # 期待結果: [7.0, 10.0]
     u = Vector([2.0, 3.0])
     v = Vector([5.0, 7.0])
     result = u.add(v)
@@ -137,12 +131,6 @@ def test_vector_from_subject():
             f"test_vector_from_subject (add) failed: expected [7.0, 10.0], got {result}"
         )
 
-    # テスト2: 減算
-    # let mut u = Vector::from([2., 3.]);
-    # let v = Vector::from([5., 7.]);
-    # u.sub(v);
-    # println!("{}", u);
-    # 期待結果: [-3.0, -4.0]
     u = Vector([2.0, 3.0])
     v = Vector([5.0, 7.0])
     result = u.sub(v)
@@ -151,11 +139,6 @@ def test_vector_from_subject():
             f"test_vector_from_subject (sub) failed: expected [-3.0, -4.0], got {result}"
         )
 
-    # テスト3: スカラー倍
-    # let mut u = Vector::from([2., 3.]);
-    # u.scl(2.);
-    # println!("{}", u);
-    # 期待結果: [4.0, 6.0]
     u = Vector([2.0, 3.0])
     result = u.scl(2.0)
     if result != [4.0, 6.0]:
@@ -166,14 +149,6 @@ def test_vector_from_subject():
 
 
 def test_matrix_from_subject():
-    # テスト1: 加算
-    # let mut u = Matrix::from([ [1., 2.], [3., 4.] ]);
-    # let v = Matrix::from([ [7., 4.], [-2., 2.] ]);
-    # u.add(v);
-    # println!("{}", u);
-    # 期待結果:
-    # [8.0, 6.0]
-    # [1.0, 6.0]
     u = Matrix([[1.0, 2.0], [3.0, 4.0]])
     v = Matrix([[7.0, 4.0], [-2.0, 2.0]])
     result = u.add(v)
@@ -182,14 +157,6 @@ def test_matrix_from_subject():
             f"test_matrix_from_subject (add) failed: expected [[8.0, 6.0], [1.0, 6.0]], got {result}"
         )
 
-    # テスト2: 減算
-    # let mut u = Matrix::from([ [1., 2.], [3., 4.] ]);
-    # let v = Matrix::from([ [7., 4.], [-2., 2.] ]);
-    # u.sub(v);
-    # println!("{}", u);
-    # 期待結果:
-    # [-6.0, -2.0]
-    # [5.0, 2.0]
     u = Matrix([[1.0, 2.0], [3.0, 4.0]])
     v = Matrix([[7.0, 4.0], [-2.0, 2.0]])
     result = u.sub(v)
@@ -198,13 +165,6 @@ def test_matrix_from_subject():
             f"test_matrix_from_subject (sub) failed: expected [[-6.0, -2.0], [5.0, 2.0]], got {result}"
         )
 
-    # テスト3: スカラー倍
-    # let mut u = Matrix::from([ [1., 2.], [3., 4.] ]);
-    # u.scl(2.);
-    # println!("{}", u);
-    # 期待結果:
-    # [2.0, 4.0]
-    # [6.0, 8.0]
     u = Matrix([[1.0, 2.0], [3.0, 4.0]])
     result = u.scl(2.0)
     if result != [[2.0, 4.0], [6.0, 8.0]]:
