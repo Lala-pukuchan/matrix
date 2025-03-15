@@ -66,6 +66,12 @@ def test_matrix_from_subject():
 
 
 def main():
+    """
+    a: ratio
+    v1: vector
+    v2: vector
+    Linear interpolation: (1 – a) · v₁ + a · v₂
+    """
     try:
         test_number()
         test_vector()
