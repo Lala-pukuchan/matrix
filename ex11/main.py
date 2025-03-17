@@ -1,51 +1,74 @@
 import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from class_dir.Matrix import Matrix
+from Matrix import Matrix
 
 
-# • What happens when det(A) = 0
-#   area of the parallelogram is 0, the vectors are linearly dependent
-# • What the determinant represents geometrically in the vector space after using the matrix for a linear transformation.
-#   The determinant represents the scaling factor of the linear transformation described by the matrix
-# Test cases for matrix determinant
-u = Matrix(
-    [
-        [1.0, -1.0],
-        [-1.0, 1.0],
+def test():
+    test_cases = [
+        ([[0, 0], [0, 0]], 0.0),
+        ([[1, 0], [0, 1]], 1.0),
+        ([[2, 0], [0, 2]], 4.0),
+        ([[1, 1], [1, 1]], 0.0),
+        ([[0, 1], [1, 0]], -1.0),
+        ([[1, 2], [3, 4]], -2.0),
+        ([[-7, 5], [4, 6]], -62.0),
+        ([[1, 0, 0], [0, 1, 0], [0, 0, 1]], 1.0),
     ]
-)
-print(u.determinant())  # Output: 0.0
+    tol = 1e-6
+    for data, expected in test_cases:
+        m = Matrix(data)
+        det = m.determinant()
+        if abs(det - expected) > tol:
+            raise AssertionError(
+                f"Test failed for matrix {data}: expected determinant {expected}, got {det}"
+            )
+    print("All determinant tests passed in test().")
 
-print("-----------------------")
-u = Matrix(
-    [
-        [2.0, 0.0, 0.0],
-        [0.0, 2.0, 0.0],
-        [0.0, 0.0, 2.0],
-    ]
-)
-print(u.determinant())  # Output: 8.0
 
-print("-----------------------")
-u = Matrix(
-    [
-        [8.0, 5.0, -2.0],
-        [4.0, 7.0, 20.0],
-        [7.0, 6.0, 1.0],
-    ]
-)
-print(u.determinant())  # Output: -174.0
+def test_from_subject():
+    tol = 1e-6
+    m = Matrix([[1.0, -1.0], [-1.0, 1.0]])
+    if abs(m.determinant() - 0.0) > tol:
+        raise AssertionError(
+            f"Subject test 1 failed: expected 0.0, got {m.determinant()}"
+        )
 
-print("-----------------------")
-u = Matrix(
-    [
-        [8.0, 5.0, -2.0, 4.0],
-        [4.0, 2.5, 20.0, 4.0],
-        [8.0, 5.0, 1.0, 4.0],
-        [28.0, -4.0, 17.0, 1.0],
-    ]
-)
-print(u.determinant())  # Output: 1032.0
+    m = Matrix([[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]])
+    if abs(m.determinant() - 8.0) > tol:
+        raise AssertionError(
+            f"Subject test 2 failed: expected 8.0, got {m.determinant()}"
+        )
+
+    m = Matrix([[8.0, 5.0, -2.0], [4.0, 7.0, 20.0], [7.0, 6.0, 1.0]])
+    if abs(m.determinant() - (-174.0)) > tol:
+        raise AssertionError(
+            f"Subject test 3 failed: expected -174.0, got {m.determinant()}"
+        )
+
+    m = Matrix(
+        [
+            [8.0, 5.0, -2.0, 4.0],
+            [4.0, 2.5, 20.0, 4.0],
+            [8.0, 5.0, 1.0, 4.0],
+            [28.0, -4.0, 17.0, 1.0],
+        ]
+    )
+    if abs(m.determinant() - 1032.0) > tol:
+        raise AssertionError(
+            f"Subject test 4 failed: expected 1032.0, got {m.determinant()}"
+        )
+
+    print("All subject determinant tests passed in test_from_subject().")
+
+
+def main():
+    try:
+        test()
+        test_from_subject()
+    except AssertionError as e:
+        print("Test failed:", e)
+        sys.exit(1)
+    print("All tests passed.")
+
+
+if __name__ == "__main__":
+    main()
